@@ -326,7 +326,7 @@ npm run dev
 - Auto-refresh queue every 10 seconds
 - Instant UI updates after mod installation
 
-## 🏆 What Makes ModWing Special
+## 🏆 What Makes PteroMod-Manager Special
 
 ### ⚡ **Performance & Efficiency**
 - **Zero Local Storage** - All processing happens in memory or temporary locations
@@ -348,4 +348,4 @@ npm run dev
 
 ---
 
-**ModWing v1.0.0** - The most advanced Pterodactyl mod manager, built for the modern web.
+**PteroMod-Manager v1.0.0** - The most advanced Pterodactyl mod manager, built for the modern web.
