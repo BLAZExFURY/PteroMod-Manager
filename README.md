@@ -4,6 +4,10 @@
 
 A sophisticated web application that revolutionizes how you browse, queue, and install Minecraft mods from Modrinth directly to your Pterodactyl servers. Features intelligent mod loader detection, dependency management, and a beautiful Bootstrap 5 interface with complete automation.
 
+## 🔗 Repository
+
+**GitHub:** [https://github.com/BLAZExFURY/PteroMod-Manager.git](https://github.com/BLAZExFURY/PteroMod-Manager.git)
+
 ![ModWing Interface](https://img.shields.io/badge/Status-Production%20Ready-brightgreen) ![Version](https://img.shields.io/badge/Version-1.0.0-blue) ![License](https://img.shields.io/badge/License-MIT-green) ![Python](https://img.shields.io/badge/Python-3.8+-blue) ![Node](https://img.shields.io/badge/Node.js-16+-green)
 
 ## ✨ Key Features
@@ -59,8 +63,8 @@ A sophisticated web application that revolutionizes how you browse, queue, and i
 
 1. **Clone and setup:**
    ```bash
-   git clone <repository-url>
-   cd Pterodactle_Modrith_Mod_Plugin
+   git clone https://github.com/BLAZExFURY/PteroMod-Manager.git
+   cd PteroMod-Manager
    npm install
    ```
 
@@ -268,9 +272,17 @@ We welcome contributions! Please follow these guidelines:
 
 ### Development Setup
 ```bash
+# Clone the repository
+git clone https://github.com/BLAZExFURY/PteroMod-Manager.git
+cd PteroMod-Manager
+
 # Install dependencies
 npm install
 pip install requests
+
+# Copy environment template
+cp .env.example .env
+# Edit .env with your Pterodactyl API keys
 
 # Run in development mode
 npm run dev
