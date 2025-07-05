@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pterodactyl Mod Manager</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-server"></i> Pterodactyl Mod Manager</h1>
+                <p id="headerSubtitle">Select your server and browse compatible mods automatically</p>
+            </div>
+            <div class="breadcrumb" id="breadcrumb" style="display: none;">
+                <button onclick="goToServerSelection()" class="breadcrumb-btn">
+                    <i class="fas fa-server"></i> Servers
+                </button>
+                <span class="breadcrumb-separator">></span>
+                <span id="currentServerName">Server Name</span>
+                <span class="breadcrumb-separator">></span>
+                <span>Mods</span>
+            </div>
+        </header>
+
+        <!-- Server Selection Page (Landing) -->
+        <div id="serverSelectionPage" class="page-content active">
+            <div class="server-selection-section">
+                <div class="page-header">
+                    <h2><i class="fas fa-server"></i> Choose Your Server</h2>
+                    <p>Select a server to browse compatible mods automatically</p>
+                </div>
+                
+                <!-- Setup Banner -->
+                <div class="setup-banner" id="setupBanner" style="background: #e3f2fd; border: 2px solid #1976d2; border-radius: 10px; padding: 20px; margin-bottom: 20px; display: none;">
+                    <h3 style="color: #1976d2; margin-bottom: 10px;">
+                        <i class="fas fa-rocket"></i> Quick Setup Required
+                    </h3>
+                    <p style="margin-bottom: 15px; color: #333;">To get started with mod management, you need to run the proxy server:</p>
+                    <div style="background: #333; color: #fff; padding: 10px; border-radius: 5px; font-family: monospace; margin-bottom: 15px;">
+                        <div>1. Open terminal in your project folder</div>
+                        <div>2. Run: <strong>npm install</strong></div>
+                        <div>3. Run: <strong>npm start</strong></div>
+                        <div>4. Refresh this page</div>
+                    </div>
+                    <button onclick="checkProxyStatus()" style="background: #1976d2; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+                        <i class="fas fa-sync"></i> Check Connection
+                    </button>
+                </div>
+
+                <div class="loading" id="serverLoading">
+                    <div class="spinner"></div>
+                    <p>Loading your servers...</p>
+                </div>
+
+                <div class="error" id="serverError" style="display: none;">
+                    <div class="error-content">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Cannot connect to your servers</h3>
+                        <p id="serverErrorMessage"></p>
+                        <button onclick="loadServersForSelection()" class="retry-btn">Try Again</button>
+                    </div>
+                </div>
+
+                <div class="servers-selection-grid" id="serversSelectionGrid"></div>
+            </div>
+        </div>
+
+        <!-- Mods Page (After server selection) -->
+        <div id="modsPage" class="page-content" style="display: none;">
+            <div class="server-info-bar" id="serverInfoBar">
+                <div class="server-info-content">
+                    <div class="server-info-left">
+                        <h3 id="selectedServerName">Server Name</h3>
+                        <div class="server-specs">
+                            <span class="spec-item">
+                                <i class="fas fa-memory"></i>
+                                <span id="selectedServerRAM">RAM: Loading...</span>
+                            </span>
+                            <span class="spec-item">
+                                <i class="fas fa-hdd"></i>
+                                <span id="selectedServerStorage">Storage: Loading...</span>
+                            </span>
+                            <span class="spec-item">
+                                <i class="fas fa-cube"></i>
+                                <span id="selectedServerLoader">Forge</span>
+                            </span>
+                            <span class="spec-item">
+                                <i class="fas fa-tag"></i>
+                                <span id="selectedServerVersion">MC 1.20.1</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="server-info-right">
+                        <button onclick="goToServerSelection()" class="change-server-btn">
+                            <i class="fas fa-exchange-alt"></i> Change Server
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="search-section">
+                <form autocomplete="off" novalidate>
+                    <div class="search-container">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="search" id="searchInput" placeholder="Search compatible mods..." class="search-input" 
+                               autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false"
+                               data-form-type="search" name="search-query-mods" role="searchbox"
+                               data-lpignore="true" data-1p-ignore="true">
+                    </div>
+                </form>
+                <div class="filters">
+                    <select id="categoryFilter" class="filter-select">
+                        <option value="">All Categories</option>
+                        <option value="technology">Technology</option>
+                        <option value="adventure">Adventure</option>
+                        <option value="magic">Magic</option>
+                        <option value="decoration">Decoration</option>
+                        <option value="utility">Utility</option>
+                        <option value="library">Library</option>
+                        <option value="food">Food</option>
+                        <option value="equipment">Equipment</option>
+                        <option value="management">Management</option>
+                        <option value="optimization">Optimization</option>
+                    </select>
+                    
+                    <select id="sortFilter" class="filter-select">
+                        <option value="relevance">Sort by Relevance</option>
+                        <option value="downloads">Most Downloaded</option>
+                        <option value="updated">Recently Updated</option>
+                        <option value="newest">Newest</option>
+                        <option value="follows">Most Followed</option>
+                    </select>
+                    
+                    <div class="auto-filter-info">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Showing mods compatible with your server</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="loading" id="loading" style="display: none;">
+                <div class="spinner"></div>
+                <p>Loading compatible mods...</p>
+            </div>
+
+            <div class="error" id="error" style="display: none;">
+                <div class="error-content">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>Oops! Something went wrong</h3>
+                    <p id="errorMessage"></p>
+                    <button onclick="loadModsForServer()" class="retry-btn">Try Again</button>
+                </div>
+            </div>
+
+            <div class="mods-grid" id="modsGrid">            </div>
+
+            <!-- Pagination -->
+            <div id="paginationContainer" class="pagination-container" style="display: none;">
+                <div class="pagination-numbers">
+                    <button id="prevBtn" onclick="goToPreviousPage()" disabled>
+                        <i class="fas fa-chevron-left"></i> Previous
+                    </button>
+                    
+                    <div id="paginationNumbers">
+                        <!-- Page numbers will be populated here -->
+                    </div>
+                    
+                    <button id="nextBtn" onclick="goToNextPage()">
+                        Next <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
