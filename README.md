@@ -27,7 +27,7 @@ A sophisticated web application that revolutionizes how you browse, queue, and i
 ### 📦 **Advanced Mod Management**
 - **Modrinth Integration** - Browse and search thousands of mods directly
 - **Dependency Resolution** - Automatically handles mod dependencies and conflicts
-- **Queue System** - Queue multiple mods for batch installation
+- **Queue System** - Queue multiple mods for batch installation with visual indicators
 - **Duplicate Prevention** - Smart detection prevents duplicate installations
 
 ### 🚀 **Seamless Installation**
@@ -41,6 +41,7 @@ A sophisticated web application that revolutionizes how you browse, queue, and i
 - **Bootstrap 5 UI** - Responsive, professional interface with custom color palette
 - **Auto-Refresh** - Dynamic updates without manual page reloads
 - **"Installed" Indicators** - Clear visual feedback for already installed mods
+- **"Queued" Indicators** - Orange badges and highlights for queued mods
 - **Mobile-Friendly** - Fully responsive design works on all devices
 - **Smooth Animations** - Professional transitions and loading states
 - **Accessibility Ready** - WCAG compliant design patterns
@@ -98,7 +99,7 @@ A sophisticated web application that revolutionizes how you browse, queue, and i
 Create a `.env` file in the project root:
 
 ```env
-# Pterodactyl Panel Configuration
+# Pterodactyl Panel Configuration (NO trailing slash!)
 PTERODACTYL_URL=https://your-panel.example.com
 APPLICATION_API_KEY=ptla_your_application_api_key_here
 
@@ -109,6 +110,8 @@ CLIENT_API_KEY=ptlc_your_client_api_key_here
 PORT=3000
 NODE_ENV=production
 ```
+
+**⚠️ Important:** Ensure `PTERODACTYL_URL` has **no trailing slash** (`/`) at the end.
 
 ### API Key Setup
 
@@ -134,11 +137,12 @@ NODE_ENV=production
 1. **Select a server** to view compatible mods
 2. **Browse mods** with automatic filtering for your server's mod loader and version
 3. **Search and filter** by categories, popularity, or update date
-4. **Add mods to queue** - mods are intelligently queued with dependencies
+4. **Add mods to queue** - mods show orange "Queued" badges and card highlights
 5. **Install all queued mods** with one click - handles downloading and uploading automatically
 
 ### Advanced Features
 - **Installed Mod Detection** - Already installed mods show with green "Installed" badges
+- **Queue Visual Indicators** - Queued mods show orange "Queued" badges and card borders
 - **Auto-Refresh** - UI updates automatically when new content is available
 - **Dependency Resolution** - Automatically includes required dependencies
 - **Error Handling** - Professional error messages and retry functionality
@@ -148,7 +152,7 @@ NODE_ENV=production
 ### Frontend
 - **Framework:** Bootstrap 5 with custom CSS
 - **JavaScript:** Vanilla ES6+ with modern async/await patterns
-- **Features:** Auto-refresh, smooth animations, responsive design
+- **Features:** Auto-refresh, smooth animations, responsive design, queue indicators
 
 ### Backend
 - **API Proxy:** Node.js + Express server with CORS handling
@@ -202,8 +206,10 @@ The application automatically detects your server configuration by analyzing:
 
 ### Common Issues
 
-**Connection Problems:**
-- Verify Pterodactyl panel URL is correct (no trailing slash)
+**500/404 Connection Errors:**
+- ❌ `PTERODACTYL_URL=http://your-panel.com/` (with trailing slash)
+- ✅ `PTERODACTYL_URL=http://your-panel.com` (no trailing slash)
+- Verify Pterodactyl panel URL is correct and accessible
 - Ensure API key starts with `ptla_` and has proper permissions
 - Check network connectivity and firewall settings
 
@@ -308,7 +314,8 @@ npm run dev
 - Intuitive navigation and user feedback
 
 ### Advanced Queue Management
-- Visual queue display with mod information
+- Visual queue display with orange "Queued" badges
+- Orange card borders and highlights for queued mods
 - Easy queue modification (add/remove mods)
 - Batch installation with progress tracking
 - Automatic dependency inclusion
